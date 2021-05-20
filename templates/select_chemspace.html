@@ -1,11 +1,35 @@
+<!-- Use Bootstamp v4.0 -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
-        <title>select Chem Space</title>
+        <meta charset="utf-8">
+        <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/$
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/boots$
+         -->
+         <!-- stylesheet -->
+         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <!-- JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+        <!-- Latest compiled and minified Bootstrap JavaScript -->
+        <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.j$ -->
+        <tittle>
+
+        </tittle>
     </head>
     <body>
-        <h2>Select Chemical Space Visualization</h2>
-        <!-- FORM -->
+        <div class="container">
+            <h1>Select chemical space representation</h1>
+        </div>
+        
+        <div class="container">
+            <form method="post" action="/select_chemspace">
+                {{ form.csrf_token }}
+                {{ form.pca.label }}
+                {{ form.pca }}
+                {{ form.tsne.label }}
+                {{ form.tsne }}
+            </form>
+        </div>
         
     </body>
 </html>

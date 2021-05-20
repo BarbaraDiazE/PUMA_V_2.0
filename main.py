@@ -1,11 +1,14 @@
 import os
 import pandas as pd
 from flask import Flask, render_template, request, redirect, url_for
+from flask_wtf import FlaskForm
+from wtforms import Form, SubmitField
+
 
 app = Flask(__name__) 
 
 app.config["DEBUG"] = True
-
+app.config["SECRET_KEY"]="PUMAV2"
 #Upload folder
 UPLOAD_FOLDER = 'static/files'
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
@@ -30,9 +33,24 @@ def upload_file():
         parseCSV(file_path)
     return redirect(url_for("index"))
 
-@app.route("/select_chemspace")
+
+"""Chemical Space"""
+class ChemSpaceForm(Form):
+    pca = SubmitField('pca')
+    tsne  = SubmitField('tsne')
+
+@app.route("/select_chemspace", methods = ["GET","POST"])
 def select_chemspace():
-    return render_template("select_chemspace.html")
+    print("starting form")
+    form = ChemSpaceForm(request.form)
+    if request.method == 'POST' :
+    # if form.validate_on_submit():
+        if form.pca.data:
+            return "PCA will be displayed"
+        if form.tsne.data:
+            return "TSNE will be displayed"
+               
+    return render_template("select_chemspace.html", form=form)
 
 if (__name__ == "__main__"):
     app.run(port=5000) 
