@@ -30,6 +30,9 @@ def upload_file():
         parseCSV(file_path)
     return redirect(url_for("index"))
 
+@app.route("/select_chemspace")
+def select_chemspace():
+    return render_template("select_chemspace.html")
 
 if (__name__ == "__main__"):
     app.run(port=5000) 
