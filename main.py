@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import Form, SubmitField
 
+from modules.PCA.PlotPCA import Plot
 
 app = Flask(__name__) 
 
@@ -39,6 +40,10 @@ class ChemSpaceForm(Form):
     pca = SubmitField('pca')
     tsne  = SubmitField('tsne')
 
+
+
+
+
 @app.route("/select_chemspace", methods = ["GET","POST"])
 def select_chemspace():
     print("starting form")
@@ -46,11 +51,18 @@ def select_chemspace():
     if request.method == 'POST' :
     # if form.validate_on_submit():
         if form.pca.data:
-            return "PCA will be displayed"
+            return redirect(url_for('plot_1'))
         if form.tsne.data:
             return "TSNE will be displayed"
-               
     return render_template("select_chemspace.html", form=form)
 
+@app.route("/plot_1")
+def plot_1():
+    result =pd.read_csv("/home/babs/Desktop/test_puma/PCA_result_test_puma_2.csv")
+    print(result.head(4))
+    script, div = Plot(result).plot_pca("physicochemical descriptors", "50","50")
+    return render_template("plot.html", script=script, div=div)
+    
+
 if (__name__ == "__main__"):
-    app.run(port=5000) 
+    app.run(port=5000, debug=True) 
