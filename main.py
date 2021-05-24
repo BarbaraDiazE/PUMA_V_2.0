@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 app.config["SECRET_KEY"]="PUMAV2"
 #Upload folder
-UPLOAD_FOLDER = 'static/files'
+UPLOAD_FOLDER = 'static/files/'
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 
 def parseCSV(filepath):
@@ -23,10 +23,19 @@ def parseCSV(filepath):
 def index():
     return render_template("home.html")
 
-
 @app.route("/home2")
 def home_2():
     return render_template("home2.html")
+
+
+@app.route("/home2", methods = ["POST"])
+def file():
+    uploaded_file = request.files["file"]
+    if uploaded_file.filename != "":
+        file_path = os.path.join(app.config["UPLOAD_FOLDER"], uploaded_file.filename)
+        uploaded_file.save(file_path)
+        print("file is loaded")
+    return redirect(url_for("home_2"))
 
 
 #get the uoloaded file
