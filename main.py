@@ -23,6 +23,12 @@ def parseCSV(filepath):
 def index():
     return render_template("home.html")
 
+
+@app.route("/home2")
+def home_2():
+    return render_template("home2.html")
+
+
 #get the uoloaded file
 @app.route("/", methods = ["POST"])
 def upload_file():
@@ -58,7 +64,7 @@ def select_chemspace():
 
 @app.route("/plot_1")
 def plot_1():
-    result =pd.read_csv("/home/babs/Desktop/test_puma/PCA_result_test_puma_2.csv")
+    result = pd.read_csv("/home/babs/Desktop/test_puma/PCA_result_test_puma_2.csv")
     print(result.head(4))
     script, div = Plot(result).plot_pca("physicochemical descriptors", "50","50")
     return render_template("plot.html", script=script, div=div)
