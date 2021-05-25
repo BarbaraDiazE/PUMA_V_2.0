@@ -36,6 +36,7 @@ def file():
         uploaded_file.save(file_path)
         print("file is loaded")
     return redirect(url_for("home_2"))
+    # return "file was loaded"
 
 
 #get the uoloaded file
