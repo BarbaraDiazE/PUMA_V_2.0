@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, flash, render_template, request, redirect, url_for
 from flask_wtf import FlaskForm
 from wtforms import Form, SubmitField
 
@@ -23,20 +23,22 @@ def parseCSV(filepath):
 def index():
     return render_template("home.html")
 
-@app.route("/home2")
-def home_2():
+@app.route("/home")
+def home():
     return render_template("home2.html")
 
 
-@app.route("/home2", methods = ["POST"])
-def file():
+@app.route("/home", methods = ["POST"])
+def home2():
     uploaded_file = request.files["file"]
     if uploaded_file.filename != "":
         file_path = os.path.join(app.config["UPLOAD_FOLDER"], uploaded_file.filename)
         uploaded_file.save(file_path)
+        flash("File loaded succesfully! When fou leave these page your database will be deleted")
         print("file is loaded")
-    return redirect(url_for("home_2"))
-    # return "file was loaded"
+        return redirect(url_for("home"))
+    return render_template("home2.html")
+
 
 
 #get the uoloaded file
@@ -55,7 +57,6 @@ def upload_file():
 class ChemSpaceForm(Form):
     pca = SubmitField('pca')
     tsne  = SubmitField('tsne')
-
 
 
 
